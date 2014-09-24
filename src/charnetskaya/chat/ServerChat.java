@@ -2,9 +2,13 @@ package charnetskaya.chat;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.io.DataInputStream;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -21,6 +25,7 @@ public class ServerChat extends JFrame {
 	private JTextArea area;
 	private JPanel panel;
 	private JButton send;
+private Socket socket;
 
 	public ServerChat() {
 		this.panel = new JPanel();
@@ -34,7 +39,9 @@ public class ServerChat extends JFrame {
 		send = new JButton("Send");
 		send.setBackground(Color.getHSBColor(255, 255, 204));
 		send.setForeground(Color.getHSBColor(255, 10, 255));
-		// this.field.setColumns(40);
+		send.addActionListener(new ButtonListener());
+		
+		
 
 		this.add(new JScrollPane(area), BorderLayout.CENTER);
 		this.panel.add(field, BorderLayout.CENTER);
@@ -49,23 +56,51 @@ public class ServerChat extends JFrame {
 		try {
 			area.setText("Server started \n");
 			ServerSocket server = new ServerSocket(8080);
-			Socket socket = server.accept();
+			socket = server.accept();
 			area.setText("Client connected");
+			InputStream in = socket.getInputStream();
+			System.out.println("1");
+			// DataOutputStream out = new
+			// DataOutputStream(socket.getOutputStream());
 
-			DataInputStream in = new DataInputStream(socket.getInputStream());
-			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+			System.out.println("2");
+			String line = reader.readLine();
+			
+			System.out.println(line);
+			area.setText(area.getText() + " \n" + line);
 
-			while (true) {
-				String recievedInfo = in.toString();
-
-				area.setText(area.getText() + " \n" + recievedInfo);
-			}
+			// }
 		} catch (IOException e) {
 			System.err.print(e);
 		}
 
 	}
 
+	private class ButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			
+			
+			try {
+				DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+				out.writeChars(send.getText().toString() + "\n");
+				out.flush();
+				
+				area.setText(area.getText() + "\nMe:   " + send.getText().toString() + "\n");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
+			
+		}
+		
+	}
+	
 	public static void main(String[] args) {
 		new ServerChat();
 	}
