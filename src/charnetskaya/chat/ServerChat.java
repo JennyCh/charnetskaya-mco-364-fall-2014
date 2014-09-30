@@ -25,7 +25,7 @@ public class ServerChat extends JFrame {
 	private JTextArea area;
 	private JPanel panel;
 	private JButton send;
-private Socket socket;
+	private Socket socket;
 
 	public ServerChat() {
 		this.panel = new JPanel();
@@ -40,8 +40,6 @@ private Socket socket;
 		send.setBackground(Color.getHSBColor(255, 255, 204));
 		send.setForeground(Color.getHSBColor(255, 10, 255));
 		send.addActionListener(new ButtonListener());
-		
-		
 
 		this.add(new JScrollPane(area), BorderLayout.CENTER);
 		this.panel.add(field, BorderLayout.CENTER);
@@ -55,52 +53,45 @@ private Socket socket;
 
 		try {
 			area.setText("Server started \n");
-			ServerSocket server = new ServerSocket(8080);
+			ServerSocket server = new ServerSocket(8000);
 			socket = server.accept();
-			area.setText("Client connected");
+			area.setText("Client connected\n");
 			InputStream in = socket.getInputStream();
-			System.out.println("1");
-			// DataOutputStream out = new
-			// DataOutputStream(socket.getOutputStream());
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-			System.out.println("2");
-			String line = reader.readLine();
-			
-			System.out.println(line);
-			area.setText(area.getText() + " \n" + line);
+			String line;
 
-			// }
+			while (!"".equals((line = reader.readLine()))) {
+				String client = "Client: ";
+				area.setText(area.getText() + client + line);
+			}
 		} catch (IOException e) {
 			System.err.print(e);
 		}
 
 	}
 
-	private class ButtonListener implements ActionListener{
+	private class ButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			
-			
+
 			try {
 				DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-				out.writeChars(send.getText().toString() + "\n");
+				out.write((field.getText() + "\n").getBytes());
 				out.flush();
-				
-				area.setText(area.getText() + "\nMe:   " + send.getText().toString() + "\n");
+				area.setText(area.getText() + "\nMe:   " + field.getText().toString());
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-			
-			
 		}
-		
+
 	}
-	
+
 	public static void main(String[] args) {
 		new ServerChat();
 	}
