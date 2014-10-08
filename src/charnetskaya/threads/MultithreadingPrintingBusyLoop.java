@@ -1,21 +1,28 @@
 package charnetskaya.threads;
 
+import java.util.concurrent.CountDownLatch;
+
 public class MultithreadingPrintingBusyLoop {
 	
-	public static void main (String [] args){
-		Thread threads [] = new Thread[10000000];
+	public static void main (String [] args) throws InterruptedException{
+		Thread threads [] = new Thread[5];
+		
+		CountDownLatch latch = new CountDownLatch(5);
 		
 		for(int i =0; i <threads.length; i++){
 			int current = i;
 			threads[i] = new Thread(){
 				public void run(){
 					System.out.println (current);
+					latch.countDown();
 				}
 			};
 			
 			threads[i].start();
 		}
 		
+		latch.await();
+/*		
 		//this is a busy loop - bad idea
 		int alive = threads.length;
 		while(alive > 0){
@@ -25,7 +32,7 @@ public class MultithreadingPrintingBusyLoop {
 					alive++;
 				}
 			}
-		}
+		}*/
 		
 		System.out.println("finished");
 	}
