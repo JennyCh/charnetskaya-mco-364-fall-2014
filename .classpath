@@ -2,5 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="javax.servlet-api-3.1.0.jar"/>
+	<classpathentry kind="lib" path="jetty-all-9.2.4.v20141103.jar"/>
+	<classpathentry kind="lib" path="jai_imageio-1.1.jar"/>
+	<classpathentry kind="lib" path="sun-jai_codec.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
