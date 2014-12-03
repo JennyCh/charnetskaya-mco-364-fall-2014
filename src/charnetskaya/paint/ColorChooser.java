@@ -11,9 +11,6 @@ import javax.swing.JFrame;
 
 public class ColorChooser extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Canvas canvas;
 	private Color color;

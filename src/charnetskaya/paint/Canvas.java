@@ -11,23 +11,23 @@ import javax.swing.JComponent;
 public class Canvas extends JComponent {
 
 	private static final long serialVersionUID = 1L;
-	private int x;
-	private int y;
+
 	private BufferedImage image;
 	private Color color;
 	private int stroke;
-private Paint frame;
-	
+	private Paint frame;
+
 	public Canvas(Paint frame) {
 		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
-this.frame = frame;
+		this.frame = frame;
 		this.color = Color.black;
 		this.setBackground(Color.white);
 		Graphics2D g2 = (Graphics2D) image.getGraphics();
 		g2.fillRect(0, 0, 800, 600);
 		stroke = 1;
 
-		g2.setStroke(new BasicStroke(stroke));
+		g2.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, 0));
+
 	}
 
 	public Paint getFrame() {
@@ -38,22 +38,18 @@ this.frame = frame;
 		this.color = color;
 	}
 
-	public void contDrawing(int x, int y) {
-
-		Graphics2D g2 = (Graphics2D) image.getGraphics();
-		g2.setStroke(new BasicStroke(stroke));
-		g2.setColor(color);
-		if (this.x != 0 && this.y != 0) {
-			g2.drawLine(this.x, this.y, x, y);
-		}
-
-		this.x = x;
-		this.y = y;
-	}
-
 	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		g.drawImage(image, 0, 0, null);
+		//System.out.println ("repainting");
 
+		listener.draw(g);
+	}
+	
+	
+
+	public Color getColor() {
+		return color;
 	}
 
 	public int getStroke() {
@@ -67,18 +63,6 @@ this.frame = frame;
 
 	public BufferedImage getImage() {
 		return image;
-	}
-
-	public void setPoint(int x, int y) {
-		this.y = y;
-		this.x = x;
-
-	}
-
-	public void reset() {
-		Graphics2D g2 = (Graphics2D) image.getGraphics();
-		g2.fillRect(0, 0, 800, 600);
-		this.repaint();
 	}
 
 }
