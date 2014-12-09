@@ -1,73 +1,84 @@
 package charnetskaya.paint;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
 public class EditorPanel extends JPanel {
-	
-	private static final long serialVersionUID = 1L;
-	
-	private JPanel colorPanel;
-	private JPanel newPicturePanel;
-	private JPanel safeImagePanel;
-	private StrokeManagerPanel strokeManagerPanel;
-	private DrawSquarePanel drawSquarePanel;
-	private DrawOvalPanel drawOvalPanel;
-	private DrawPencilPanel drawPencilPanel;
-	
-	private Canvas canvas;
-	private Paint paint;
 
-	public EditorPanel(Canvas canvas, Paint paint){
+	private static final long serialVersionUID = 1L;
+
+	private final JPanel colorPanel;
+	private final JPanel newPicturePanel;
+	private final JPanel safeImagePanel;
+
+	private final JPanel shapesPanel;
+	private final StrokeManagerPanel strokeManagerPanel;
+	private final DrawSquarePanel drawSquarePanel;
+	private final DrawOvalPanel drawOvalPanel;
+	private final DrawPencilPanel drawPencilPanel;
+	private final DrawFillSquarePanel drawFillSquarePanel;
+	private final DrawFillOvalPanel drawFillOvalPanel;
+
+	private final Canvas canvas;
+	private final Paint paint;
+
+	public EditorPanel(Canvas canvas, Paint paint) {
 		this.canvas = canvas;
 		this.setSize(800, 200);
-		this.setLayout(new GridLayout(1, 4));
+		this.setLayout(new FlowLayout());
 		this.setBackground(Color.GRAY);
 		this.paint = paint;
-		
+		this.shapesPanel = new JPanel(new GridLayout(2, 3));
+
 		this.colorPanel = new ColorPanel(canvas);
 		this.newPicturePanel = new NewPicturePanel(canvas);
 		this.safeImagePanel = new SafeImagePanel(canvas);
 		this.strokeManagerPanel = new StrokeManagerPanel(canvas);
-		this.drawSquarePanel = new DrawSquarePanel(canvas);
-		this.drawOvalPanel = new DrawOvalPanel(canvas);
+		this.drawSquarePanel = new DrawSquarePanel(canvas, paint);
+		this.drawOvalPanel = new DrawOvalPanel(canvas, paint);
 		this.drawPencilPanel = new DrawPencilPanel(canvas, paint);
-		
+		this.drawFillSquarePanel = new DrawFillSquarePanel(canvas, paint);
+		this.drawFillOvalPanel = new DrawFillOvalPanel(canvas, paint);
+
+		this.shapesPanel.add(drawPencilPanel);
+		this.shapesPanel.add(drawSquarePanel);
+		this.shapesPanel.add(drawOvalPanel);
+		this.shapesPanel.add(drawFillSquarePanel);
+		this.shapesPanel.add(drawFillOvalPanel);
+
 		this.add(newPicturePanel);
 		this.add(safeImagePanel);
 		this.add(colorPanel);
 		this.add(strokeManagerPanel);
-		this.add(drawPencilPanel);
-		this.add(drawSquarePanel);
-		this.add(drawOvalPanel);
+		/*
+		 * this.add(drawPencilPanel); this.add(drawSquarePanel);
+		 * this.add(drawOvalPanel); this.add(drawFillSquarePanel);
+		 * this.add(drawFillOvalPanel);
+		 */
+		this.add(shapesPanel);
 	}
-
 
 	public JPanel getColorPanel() {
 		return colorPanel;
 	}
 
-
 	public JPanel getNewPicturePanel() {
 		return newPicturePanel;
 	}
-
 
 	public JPanel getSafeImagePanel() {
 		return safeImagePanel;
 	}
 
-
 	public StrokeManagerPanel getStrokeManagerPanel() {
 		return strokeManagerPanel;
 	}
 
-
 	public Canvas getCanvas() {
 		return canvas;
 	}
-	
-	
+
 }

@@ -2,41 +2,38 @@ package charnetskaya.paint;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public class DrawPencilPanel extends JPanel {
 
-	private Canvas canvas;
-	private JButton drawPencil;
-	private Paint paint;
-	
-	public DrawPencilPanel(Canvas canvas, Paint paint){
+	private final Canvas canvas;
+	private final JButton drawPencil;
+	private final Paint paint;
+
+	public DrawPencilPanel(Canvas canvas, Paint paint) {
 		this.canvas = canvas;
 		this.paint = paint;
-		this.drawPencil = new JButton("Draw Pencil");
+		this.drawPencil = new JButton(
+				new ImageIcon(
+						"C:\\Users\\Jenny\\Documents\\GitHub\\charnetskaya-mco-364-fall-2014\\src\\charnetskaya\\paint\\Line Icon.jpg"));
 		this.drawPencil.addActionListener(new DrawPencilListener());
 		this.add(drawPencil);
+
 	}
-	
-	private class DrawPencilListener implements ActionListener{
+
+	private class DrawPencilListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
-			DrawListener listener = new DrawListener(canvas, paint);
-		
-			
-			//System.out.println ("REMOVED");
+
+			canvas.setListeners(new DrawListener(canvas, paint));
+
 		}
-		
+
 	}
-	
-	
+
 }

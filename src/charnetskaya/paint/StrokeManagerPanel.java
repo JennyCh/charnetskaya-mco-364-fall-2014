@@ -1,5 +1,6 @@
 package charnetskaya.paint;
 
+import java.awt.BasicStroke;
 import java.awt.Dimension;
 import java.awt.event.MouseListener;
 
@@ -9,13 +10,13 @@ import javax.swing.JTextField;
 public class StrokeManagerPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private JTextField strokeSize;
-	private Canvas canvas;
+	private final Canvas canvas;
 
 	public StrokeManagerPanel(Canvas canvas) {
 		this.canvas = canvas;
-		this.strokeSize = new JTextField("1");
+		this.strokeSize = new JTextField("3");
 		this.strokeSize.setPreferredSize(new Dimension(30, 30));
 		this.strokeSize.addMouseListener(new StrokeSizeFieldChange());
 
@@ -39,8 +40,10 @@ public class StrokeManagerPanel extends JPanel {
 		@Override
 		public void mouseExited(java.awt.event.MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			String value = strokeSize.getText();
-			canvas.setStroke(Integer.parseInt(value));
+			final String value = strokeSize.getText();
+			final int stroke = Integer.parseInt(value);
+			canvas.getSettings().setStroke(new BasicStroke(stroke, BasicStroke.CAP_ROUND, 0));
+
 		}
 
 		@Override

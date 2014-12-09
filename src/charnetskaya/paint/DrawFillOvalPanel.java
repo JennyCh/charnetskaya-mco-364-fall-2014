@@ -7,28 +7,29 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class DrawSquarePanel extends JPanel {
+public class DrawFillOvalPanel extends JPanel {
 
 	private final Canvas canvas;
 	private final JButton drawSquare;
 	private final Paint frame;
 
-	public DrawSquarePanel(Canvas canvas, Paint frame) {
+	public DrawFillOvalPanel(Canvas canvas, Paint frame) {
 		this.canvas = canvas;
 		this.frame = frame;
+
 		this.drawSquare = new JButton(
 				new ImageIcon(
-						"C:\\Users\\Jenny\\Documents\\GitHub\\charnetskaya-mco-364-fall-2014\\src\\charnetskaya\\paint\\Rectangle Icon.jpg"));
-		this.drawSquare.addActionListener(new DrawSquareListener());
+						"C:\\Users\\Jenny\\Documents\\GitHub\\charnetskaya-mco-364-fall-2014\\src\\charnetskaya\\paint\\Filled Oval Icon.jpg"));
+		this.drawSquare.addActionListener(new DrawFillOvalListener());
 		this.add(drawSquare);
 
 	}
 
-	private class DrawSquareListener implements ActionListener {
+	private class DrawFillOvalListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			canvas.setListeners(new SquareListener(canvas, frame));
+			canvas.setListeners(new FillOvalListener(canvas, frame));
 
 		}
 

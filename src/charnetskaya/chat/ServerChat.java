@@ -52,11 +52,15 @@ public class ServerChat extends JFrame {
 		this.setVisible(true);
 
 		try {
-			area.setText("Server started \n");
 			ServerSocket server = new ServerSocket(8000);
 			socket = server.accept();
-			area.setText("Client connected\n");
 			InputStream in = socket.getInputStream();
+			
+			
+			area.setText("Server started \n");
+			
+			area.setText("Client connected\n");
+			
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			String line;

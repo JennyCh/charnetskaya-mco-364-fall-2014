@@ -12,11 +12,11 @@ import javax.swing.JFrame;
 public class ColorChooser extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private Canvas canvas;
+	private final Canvas canvas;
 	private Color color;
-	private JColorChooser chooser;
-	private JButton button;
-	private JButton colorButton;
+	private final JColorChooser chooser;
+	private final JButton button;
+	private final JButton colorButton;
 
 	public ColorChooser(Canvas canvas, JButton colorButton) {
 		this.canvas = canvas;
@@ -40,10 +40,9 @@ public class ColorChooser extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 
 			color = chooser.getColor();
-			canvas.setColor(color);
+			canvas.getSettings().setColor(color);
 			colorButton.setBackground(color);
 		}
-
 	}
 
 }

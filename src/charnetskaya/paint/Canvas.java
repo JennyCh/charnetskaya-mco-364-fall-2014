@@ -1,68 +1,92 @@
 package charnetskaya.paint;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
+import javax.swing.JTextField;
 
-public class Canvas extends JComponent {
+public class Canvas extends JComponent implements MouseWheelListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private BufferedImage image;
-	private Color color;
-	private int stroke;
-	private Paint frame;
+	private final BufferedImage image;
+	private DrawListenerInterface listenerInterface;
+	private final Settings settings;
+
+	private final Paint frame;
 
 	public Canvas(Paint frame) {
-		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
 		this.frame = frame;
-		this.color = Color.black;
-		this.setBackground(Color.white);
-		Graphics2D g2 = (Graphics2D) image.getGraphics();
+		this.settings = new Settings();
+		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
+		this.addMouseWheelListener(this);
+
+		final Graphics2D g2 = (Graphics2D) image.getGraphics();
 		g2.fillRect(0, 0, 800, 600);
-		stroke = 1;
-
-		g2.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, 0));
 
 	}
 
-	public Paint getFrame() {
-		return frame;
+	public void defaultSettings(Graphics2D g2) {
+		settings.setDefaultSettings(g2);
 	}
 
-	public void setColor(Color color) {
-		this.color = color;
+	public void setListeners(DrawListenerInterface listener) {
+
+		if (listenerInterface != null) {
+			this.removeMouseListener(listenerInterface);
+			this.removeMouseMotionListener(listenerInterface);
+
+		}
+		this.listenerInterface = listener;
+		this.addMouseMotionListener(listenerInterface);
+		this.addMouseListener(listenerInterface);
 	}
 
+	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+
 		g.drawImage(image, 0, 0, null);
-		//System.out.println ("repainting");
-
-		listener.draw(g);
-	}
-	
-	
-
-	public Color getColor() {
-		return color;
-	}
-
-	public int getStroke() {
-		return stroke;
-	}
-
-	public void setStroke(int stroke) {
-		this.stroke = stroke;
+		defaultSettings((Graphics2D) g);
+		listenerInterface.preview((Graphics2D) g);
 
 	}
 
 	public BufferedImage getImage() {
 		return image;
+	}
+
+	public Settings getSettings() {
+		return settings;
+	}
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		// TODO Auto-generated method stub
+
+		int rotations = this.getSettings().getStrokeSize();
+		final StrokeManagerPanel panel = frame.getEditorPanel().getStrokeManagerPanel();
+		final JTextField field = panel.getStrokeSize();
+
+		if (e.getWheelRotation() < 0) {
+			rotations++;
+		}
+
+		else {
+			if (rotations >= 2)
+				rotations--;
+		}
+
+		field.setText(String.valueOf(rotations));
+
+		this.getSettings().setStrokeSize(rotations);
+
+		defaultSettings((Graphics2D) this.getGraphics());
+
 	}
 
 }
