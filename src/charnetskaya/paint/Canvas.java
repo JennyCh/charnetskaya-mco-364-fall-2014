@@ -49,9 +49,9 @@ public class Canvas extends JComponent implements MouseWheelListener {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
-		g.drawImage(image, 0, 0, null);
 		defaultSettings((Graphics2D) g);
+		g.drawImage(image, 0, 0, null);
+
 		listenerInterface.preview((Graphics2D) g);
 
 	}
