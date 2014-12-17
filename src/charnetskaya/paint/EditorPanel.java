@@ -21,16 +21,15 @@ public class EditorPanel extends JPanel {
 	private final DrawPencilPanel drawPencilPanel;
 	private final DrawFillSquarePanel drawFillSquarePanel;
 	private final DrawFillOvalPanel drawFillOvalPanel;
+	private final BucketFillPanel bucketFillPanel;
 
 	private final Canvas canvas;
-	private final Paint paint;
 
 	public EditorPanel(Canvas canvas, Paint paint) {
 		this.canvas = canvas;
 		this.setSize(800, 200);
 		this.setLayout(new FlowLayout());
 		this.setBackground(Color.GRAY);
-		this.paint = paint;
 		this.shapesPanel = new JPanel(new GridLayout(2, 3));
 
 		this.colorPanel = new ColorPanel(canvas);
@@ -42,7 +41,8 @@ public class EditorPanel extends JPanel {
 		this.drawPencilPanel = new DrawPencilPanel(canvas, paint);
 		this.drawFillSquarePanel = new DrawFillSquarePanel(canvas, paint);
 		this.drawFillOvalPanel = new DrawFillOvalPanel(canvas, paint);
-
+		this.bucketFillPanel = new BucketFillPanel(canvas);
+		this.shapesPanel.add(bucketFillPanel);
 		this.shapesPanel.add(drawPencilPanel);
 		this.shapesPanel.add(drawSquarePanel);
 		this.shapesPanel.add(drawOvalPanel);
@@ -59,6 +59,7 @@ public class EditorPanel extends JPanel {
 		 * this.add(drawFillOvalPanel);
 		 */
 		this.add(shapesPanel);
+		System.out.println("editor panel");
 	}
 
 	public JPanel getColorPanel() {
