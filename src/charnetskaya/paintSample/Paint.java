@@ -1,4 +1,4 @@
-package charnetskaya.paint;
+package charnetskaya.paintSample;
 
 import java.awt.BorderLayout;
 
@@ -9,7 +9,6 @@ public class Paint extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private final Canvas canvas;
-	private final EditorPanel editorPanel;
 	private final LayerPanel layerPanel;
 
 	public Paint() {
@@ -19,20 +18,13 @@ public class Paint extends JFrame {
 		this.setLocationRelativeTo(null);
 
 		canvas = new Canvas(this);
-		canvas.setListeners(new DrawListener(canvas));
-		this.editorPanel = new EditorPanel(canvas, this);
+		canvas.setListeners(new DrawListener(canvas, null));
 		this.layerPanel = new LayerPanel(canvas, this);
-
-		this.add(editorPanel, BorderLayout.NORTH);
 		this.add(canvas, BorderLayout.CENTER);
 		this.add(layerPanel, BorderLayout.EAST);
 
 		this.setVisible(true);
 
-	}
-
-	public EditorPanel getEditorPanel() {
-		return editorPanel;
 	}
 
 	public static void main(String[] args) {

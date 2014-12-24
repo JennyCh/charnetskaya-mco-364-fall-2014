@@ -1,4 +1,4 @@
-package charnetskaya.paint;
+package charnetskaya.paint.Message;
 
 import java.awt.Graphics2D;
 

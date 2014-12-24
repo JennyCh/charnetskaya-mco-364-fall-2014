@@ -1,5 +1,7 @@
-package charnetskaya.paint;
+package charnetskaya.paint.Message;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class ShapeMessage implements PaintMessage {
@@ -8,12 +10,29 @@ public class ShapeMessage implements PaintMessage {
 	private int x, y, width, height;
 	private int color;
 	private int strokeWidth;
-	private boolean fill;
 
 	@Override
 	public void apply(Graphics2D g2) {
 		// TODO Auto-generated method stub
+		g2.setColor(new Color(color));
+		g2.setStroke(new BasicStroke(strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));
 
+		switch (shape) {
+
+		case OVAL:
+			g2.drawOval(x, y, width, height);
+			break;
+		case FILL_OVAL:
+			g2.fillOval(x, y, width, height);
+			break;
+		case RECT:
+			g2.drawRect(x, y, width, height);
+			break;
+		case FILL_RECT:
+			g2.fillRect(x, y, width, height);
+			break;
+
+		}
 	}
 
 	public ShapeMessage(ShapeType shape, int x, int y, int width, int height, int color, int strokeWidth, boolean fill) {
@@ -25,12 +44,11 @@ public class ShapeMessage implements PaintMessage {
 		this.height = height;
 		this.color = color;
 		this.strokeWidth = strokeWidth;
-		this.fill = fill;
 	}
 
 	@Override
 	public String toString() {
-		return shape + " " + x + " " + y + " " + width + " " + height + " " + color + " " + strokeWidth + " " + fill;
+		return shape + " " + x + " " + y + " " + width + " " + height + " " + color + " " + strokeWidth;
 	}
 
 	public ShapeType getShape() {
@@ -87,14 +105,6 @@ public class ShapeMessage implements PaintMessage {
 
 	public void setStrokeWidth(int strokeWidth) {
 		this.strokeWidth = strokeWidth;
-	}
-
-	public boolean isFill() {
-		return fill;
-	}
-
-	public void setFill(boolean fill) {
-		this.fill = fill;
 	}
 
 }

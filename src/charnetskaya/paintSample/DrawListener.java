@@ -1,4 +1,4 @@
-package charnetskaya.paint;
+package charnetskaya.paintSample;
 
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -9,10 +9,11 @@ public class DrawListener implements DrawListenerInterface {
 	private int x, y;
 	private int x2;
 	private int y2;
+	private final Paint frame;
 
-	public DrawListener(Canvas canvas) {
+	public DrawListener(Canvas canvas, Paint frame) {
 		this.canvas = canvas;
-
+		this.frame = frame;
 	}
 
 	@Override
@@ -66,7 +67,6 @@ public class DrawListener implements DrawListenerInterface {
 		y = e.getY();
 		y2 = e.getY();
 		final Graphics2D g2 = (Graphics2D) canvas.getImage().getGraphics();
-		canvas.defaultSettings(g2);
 		draw(g2);
 		canvas.repaint();
 	}

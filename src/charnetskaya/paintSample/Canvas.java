@@ -1,4 +1,4 @@
-package charnetskaya.paint;
+package charnetskaya.paintSample;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -12,7 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JComponent;
-import javax.swing.JTextField;
 
 public class Canvas extends JComponent implements MouseWheelListener {
 
@@ -20,7 +19,6 @@ public class Canvas extends JComponent implements MouseWheelListener {
 
 	private final List<BufferedImage> images;
 	private DrawListenerInterface listenerInterface;
-	private final Settings settings;
 	private int activeLayer;
 	private final Color color;
 
@@ -28,28 +26,17 @@ public class Canvas extends JComponent implements MouseWheelListener {
 
 	public Canvas(Paint frame) {
 		this.frame = frame;
-		this.settings = new Settings();
 		this.images = new ArrayList<BufferedImage>();
 		this.activeLayer = 0;
 		this.color = Color.red;
 		for (int i = 0; i < 4; i++) {
 			images.add(new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB_PRE));
 
-			clear(i);
+			setLayers(i);
 		}
 
 		this.addMouseWheelListener(this);
 
-	}
-
-	/*
-	 * final Graphics2D g2 = (Graphics2D) images.get(i).getGraphics(); g2
-	 * .setComposite(AlphaComposite.getInstance(AlphaComposite.CLEAR));
-	 * g2.setBackground(new Color(255, 255, 255, 128)); g2.fillRect(0, 0, 800,
-	 * 600);
-	 */
-	public void defaultSettings(Graphics2D g2) {
-		settings.setDefaultSettings(g2);
 	}
 
 	public void setListeners(DrawListenerInterface listener) {
@@ -66,7 +53,7 @@ public class Canvas extends JComponent implements MouseWheelListener {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
+		// super.paintComponent(g);
 		// defaultSettings((Graphics2D) g);
 
 		final Iterator<BufferedImage> iter = images.iterator();
@@ -74,7 +61,7 @@ public class Canvas extends JComponent implements MouseWheelListener {
 
 			// g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
 			g.drawImage(iter.next(), 0, 0, null);
-			// this.repaint();
+			this.repaint();
 
 		}
 		listenerInterface.preview((Graphics2D) g);
@@ -90,35 +77,6 @@ public class Canvas extends JComponent implements MouseWheelListener {
 		return images.get(activeLayer);
 	}
 
-	public Settings getSettings() {
-		return settings;
-	}
-
-	@Override
-	public void mouseWheelMoved(MouseWheelEvent e) {
-		// TODO Auto-generated method stub
-
-		int rotations = this.getSettings().getStrokeSize();
-		final StrokeManagerPanel panel = frame.getEditorPanel().getStrokeManagerPanel();
-		final JTextField field = panel.getStrokeSize();
-
-		if (e.getWheelRotation() < 0) {
-			rotations++;
-		}
-
-		else {
-			if (rotations >= 2)
-				rotations--;
-		}
-
-		field.setText(String.valueOf(rotations));
-
-		this.getSettings().setStrokeSize(rotations);
-
-		defaultSettings((Graphics2D) this.getGraphics());
-
-	}
-
 	public int getActiveLayer() {
 		return activeLayer;
 	}
@@ -127,15 +85,20 @@ public class Canvas extends JComponent implements MouseWheelListener {
 		this.activeLayer = activeLayer;
 	}
 
-	public void clear(int layer) {
+	/*
+	 * public void update(Graphics g, JComponent c){ if(c.isOpaque()){
+	 * g.setColor(c.getBackground()); g.fillRect(0, 0, c.getWidth(),
+	 * c.getHeight()); } paint(g,c); }
+	 */
+
+	public void setLayers(int layerNumber) {
 		// System.out.println(layer);
-		if (layer == 0) {
+		if (layerNumber == 0) {
 			final Graphics2D g = (Graphics2D) images.get(0).getGraphics();
 			g.setColor(Color.WHITE);
 			g.fillRect(0, 0, 800, 600);
 		} else {
-			BufferedImage img = images.get(layer);
-			img = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+			final BufferedImage img = images.get(layerNumber);
 			final Graphics2D graphics = (Graphics2D) img.getGraphics();
 			graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.CLEAR));
 			graphics.fillRect(0, 0, 800, 600);
@@ -145,5 +108,11 @@ public class Canvas extends JComponent implements MouseWheelListener {
 		}
 
 		repaint();
+	}
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent arg0) {
+		// TODO Auto-generated method stub
+
 	}
 }

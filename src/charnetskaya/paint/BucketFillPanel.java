@@ -17,7 +17,6 @@ public class BucketFillPanel extends JPanel {
 		this.bucketFill = new JButton("Fill");
 		this.bucketFill.addActionListener(new ButtonListener());
 		this.add(bucketFill);
-		System.out.println("addeds");
 
 	}
 

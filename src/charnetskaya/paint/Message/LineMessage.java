@@ -1,5 +1,7 @@
-package charnetskaya.paint;
+package charnetskaya.paint.Message;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class LineMessage implements PaintMessage {
@@ -11,7 +13,9 @@ public class LineMessage implements PaintMessage {
 	@Override
 	public void apply(Graphics2D g2) {
 		// TODO Auto-generated method stub
-
+		g2.setColor(new Color(color));
+		g2.setStroke(new BasicStroke(strokeWidth));
+		g2.drawLine(x1, y1, x2, y2);
 	}
 
 	public LineMessage(int x1, int y1, int x2, int y2, int color, int strokeWidth) {

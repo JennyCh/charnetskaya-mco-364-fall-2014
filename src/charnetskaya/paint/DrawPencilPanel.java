@@ -30,7 +30,7 @@ public class DrawPencilPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 
-			canvas.setListeners(new DrawListener(canvas, paint));
+			canvas.setListeners(new DrawListener(canvas));
 
 		}
 

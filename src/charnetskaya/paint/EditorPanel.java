@@ -59,7 +59,7 @@ public class EditorPanel extends JPanel {
 		 * this.add(drawFillOvalPanel);
 		 */
 		this.add(shapesPanel);
-		System.out.println("editor panel");
+		// System.out.println("editor panel");
 	}
 
 	public JPanel getColorPanel() {

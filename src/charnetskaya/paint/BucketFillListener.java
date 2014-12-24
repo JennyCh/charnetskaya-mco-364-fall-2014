@@ -10,73 +10,66 @@ import java.util.Queue;
 
 public class BucketFillListener implements DrawListenerInterface {
 
-	private final Point initialPoint;
 	private final Queue<Point> stack;
 	private final Canvas canvas;
 
 	public BucketFillListener(Canvas canvas) {
 		// TODO Auto-generated constructor stub
 		this.stack = new LinkedList<Point>();
-		this.initialPoint = new Point();
+		// this.initialPoint = new Point();
 		this.canvas = canvas;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		this.initialPoint.x = e.getX();
-		this.initialPoint.y = e.getY();
-
 		final BufferedImage img = canvas.getImage();
-		final Color color = new Color(img.getRGB(initialPoint.x, initialPoint.y));
-		final Graphics2D g2 = (Graphics2D) canvas.getImage().getGraphics();
-		g2.setColor(Color.red);
+		final Graphics2D g2 = (Graphics2D) img.getGraphics();
+		g2.setColor(canvas.getSettings().getColor());
+		final int x = e.getX();
+		final int y = e.getY();
 
-		stack.add(initialPoint);
+		final Color initColor = new Color(img.getRGB(x, y));
+		System.out.println(initColor);
+		boolean left, right;
+		int tempY;
+
+		stack.add(new Point(x, y));
+
 		while (!stack.isEmpty()) {
+			final Point p = stack.poll();
+			final int activeX = (int) p.getX();
+			final int activeY = (int) p.getY();
 
-			// System.out.println("size " + stack.size());
-			/*
-			 * final Iterator<Point> iter = stack.iterator(); while
-			 * (iter.hasNext()) { System.out.println(iter.next().toString()); }
-			 */
-			final Point initialPoint = stack.poll();
-			// System.out.println("\ncurrent point" + initialPoint);
-			final Point leftPoint = new Point(initialPoint.x - 1, initialPoint.y);
-			final Point rightPoint = new Point(initialPoint.x + 1, initialPoint.y);
-			final Point topPoint = new Point(initialPoint.x, initialPoint.y - 1);
-			final Point bottomPoint = new Point(initialPoint.x, initialPoint.y + 1);
-
-			final Color bottomPointColor = new Color(img.getRGB(initialPoint.x, initialPoint.y + 1));
-			final Color topPointColor = new Color(img.getRGB(initialPoint.x, initialPoint.y - 1));
-			final Color leftPointColor = new Color(img.getRGB(initialPoint.x - 1, initialPoint.y));
-			final Color rightPointColor = new Color(img.getRGB(initialPoint.x + 1, initialPoint.y));
-			// System.out.println(bottomPointColor + " " + topPointColor + " " +
-			// leftPointColor + " " + rightPointColor);
-
-			if (Color.white.equals(bottomPointColor)) {
-				// System.out.println("b pass");
-				stack.add(bottomPoint);
+			tempY = activeY;
+			while (tempY >= 0 && initColor.equals((new Color(img.getRGB(activeX, tempY))))) {
+				tempY--;
 			}
-			if (Color.white.equals(topPointColor)) {
-				// System.out.println("t pass");
-				stack.add(topPoint);
-			}
+			tempY++;
 
-			if (Color.white.equals(leftPointColor)) {
-				// System.out.println("l pass");
-				stack.add(leftPoint);
-			}
+			left = right = false;
+			final int width = img.getWidth();
+			final int height = img.getHeight();
 
-			if (Color.white.equals(rightPointColor)) {
-				// System.out.println("r pass");
-				stack.add(rightPoint);
-			}
+			while (tempY < height && initColor.equals(new Color(img.getRGB(activeX, tempY)))) {
+				g2.drawLine(activeX, tempY, activeX, tempY);
 
-			g2.drawLine(initialPoint.x, initialPoint.y, initialPoint.x, initialPoint.y);
-			canvas.repaint();
+				if (!left && activeX > 0 && initColor.equals(new Color(img.getRGB(activeX - 1, tempY)))) {
+					stack.add(new Point(activeX - 1, tempY));
+					left = true;
+				} else if (left && activeX > 0 && !initColor.equals(new Color(img.getRGB(activeX - 1, tempY)))) {
+					left = false;
+				}
+
+				if (!right && activeX < width - 1 && initColor.equals(new Color(img.getRGB(activeX + 1, tempY)))) {
+					stack.add(new Point(activeX + 1, tempY));
+					right = true;
+				} else if (right && activeX < width - 1 && !initColor.equals(new Color(img.getRGB(activeX + 1, tempY)))) {
+					right = false;
+				}
+				tempY++;
+			}
 		}
-
+		canvas.repaint();
 	}
 
 	@Override
