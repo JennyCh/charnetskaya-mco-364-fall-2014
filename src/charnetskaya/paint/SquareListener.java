@@ -1,6 +1,7 @@
 package charnetskaya.paint;
 
 import java.awt.Graphics2D;
+import java.io.IOException;
 
 public class SquareListener extends DrawShapes {
 
@@ -9,7 +10,7 @@ public class SquareListener extends DrawShapes {
 	}
 
 	@Override
-	public void draw(Graphics2D g2) {
+	public void draw(Graphics2D g2) throws IOException {
 
 		super.draw(g2);
 		g2.drawRect(initX, initY, w, h);

@@ -2,6 +2,7 @@ package charnetskaya.paint;
 
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public abstract class DrawShapes implements DrawListenerInterface {
 
@@ -24,14 +25,14 @@ public abstract class DrawShapes implements DrawListenerInterface {
 	}
 
 	@Override
-	public void preview(Graphics2D g2) {
+	public void preview(Graphics2D g2) throws IOException {
 		if (prev) {
 			draw(g2);
 		}
 	}
 
 	@Override
-	public void draw(Graphics2D g2) {
+	public void draw(Graphics2D g2) throws IOException {
 		/*
 		 * this method ruined 5 hours of my sleep
 		 */
@@ -62,7 +63,12 @@ public abstract class DrawShapes implements DrawListenerInterface {
 		final Graphics2D g2 = (Graphics2D) canvas.getImage().getGraphics();
 		canvas.defaultSettings(g2);
 		prev = false;
-		draw(g2);
+		try {
+			draw(g2);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 	}
 

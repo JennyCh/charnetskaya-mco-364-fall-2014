@@ -7,12 +7,16 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JTextField;
+
+import charnetskaya.paint.Message.PaintMessageFactory;
 
 public class Canvas extends JComponent implements MouseWheelListener {
 
@@ -24,9 +28,13 @@ public class Canvas extends JComponent implements MouseWheelListener {
 	private int activeLayer;
 	private final Color color;
 
+	private final PaintMessageFactory factory;
+
 	private final Paint frame;
 
-	public Canvas(Paint frame) {
+	public Canvas(Paint frame) throws UnknownHostException, IOException {
+
+		this.factory = new PaintMessageFactory();
 		this.frame = frame;
 		this.settings = new Settings();
 		this.images = new ArrayList<BufferedImage>();
@@ -77,7 +85,12 @@ public class Canvas extends JComponent implements MouseWheelListener {
 			// this.repaint();
 
 		}
-		listenerInterface.preview((Graphics2D) g);
+		try {
+			listenerInterface.preview((Graphics2D) g);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.repaint();
 		// g2.drawImage(images.get(activeLayer), 0, 0, null);
 
@@ -146,4 +159,9 @@ public class Canvas extends JComponent implements MouseWheelListener {
 
 		repaint();
 	}
+
+	public PaintMessageFactory getFactory() {
+		return factory;
+	}
+
 }
