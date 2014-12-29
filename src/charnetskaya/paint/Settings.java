@@ -8,32 +8,18 @@ import java.awt.Stroke;
 public class Settings {
 	private Color color;
 	private Stroke stroke;
-	private final Color bgColor;
 	private int strokeSize;
 
 	public Settings() {
 		this.strokeSize = 3;
 		this.color = Color.BLACK;
 		this.stroke = new BasicStroke(strokeSize, BasicStroke.CAP_ROUND, 0);
-		this.bgColor = Color.red;
 	}
 
-	public void setStrokeSize(int strokeSize) {
-		this.strokeSize = strokeSize;
-	}
+	public void applySettings(Graphics2D g) {
 
-	public Color getBgColor() {
-		return bgColor;
-	}
-
-	public int getStrokeSize() {
-		return strokeSize;
-	}
-
-	public void setDefaultSettings(Graphics2D g2) {
-		g2.setColor(color);
-		g2.setStroke(new BasicStroke(strokeSize, BasicStroke.CAP_ROUND, 0));
-		g2.setBackground(bgColor);
+		g.setColor(color);
+		g.setStroke(stroke);
 	}
 
 	public Color getColor() {
@@ -50,6 +36,15 @@ public class Settings {
 
 	public void setStroke(Stroke stroke) {
 		this.stroke = stroke;
+	}
+
+	public int getStrokeSize() {
+		return strokeSize;
+	}
+
+	public void setStrokeSize(int strokeSize) {
+		this.strokeSize = strokeSize;
+		this.stroke = new BasicStroke(strokeSize, BasicStroke.CAP_ROUND, 0);
 	}
 
 }

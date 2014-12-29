@@ -2,10 +2,8 @@ package charnetskaya.paint;
 
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 public abstract class DrawShapes implements DrawListenerInterface {
-
 	private final Canvas canvas;
 
 	protected int x;
@@ -16,26 +14,29 @@ public abstract class DrawShapes implements DrawListenerInterface {
 	protected int h;
 	protected int initX;
 	protected int initY;
-	private final Paint frame;
 	private boolean prev;
 
-	public DrawShapes(Canvas canvas, Paint frame) {
+	public DrawShapes(Canvas canvas) {
 		this.canvas = canvas;
-		this.frame = frame;
 	}
 
 	@Override
-	public void preview(Graphics2D g2) throws IOException {
+	public void previewDraw(Graphics2D g2) {
+
 		if (prev) {
-			draw(g2);
+			// System.out.println(g2);
+			canvas.getSettings().applySettings(g2);
+			// System.out.println(g2);
+			permanentDraw(g2);
 		}
 	}
 
 	@Override
-	public void draw(Graphics2D g2) throws IOException {
+	public void permanentDraw(Graphics2D g2) {
 		/*
 		 * this method ruined 5 hours of my sleep
 		 */
+		canvas.getSettings().applySettings(g2);
 		w = Math.abs(x - x2);
 		h = Math.abs(y - y2);
 		initX = Math.min(x, x2);
@@ -54,21 +55,15 @@ public abstract class DrawShapes implements DrawListenerInterface {
 		this.y = e.getY();
 		this.x2 = x;
 		this.y2 = y;
-
+		previewDraw((Graphics2D) canvas.getGraphics());
+		// System.out.println("pressed");
 		canvas.repaint();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		final Graphics2D g2 = (Graphics2D) canvas.getImage().getGraphics();
-		canvas.defaultSettings(g2);
 		prev = false;
-		try {
-			draw(g2);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		permanentDraw((Graphics2D) canvas.getImages().get(canvas.getActiveLayer()).getGraphics());
 
 	}
 
@@ -77,6 +72,7 @@ public abstract class DrawShapes implements DrawListenerInterface {
 
 		this.x2 = e.getX();
 		this.y2 = e.getY();
+		previewDraw((Graphics2D) canvas.getGraphics());
 		this.canvas.repaint();
 
 	}
@@ -104,4 +100,5 @@ public abstract class DrawShapes implements DrawListenerInterface {
 		// TODO Auto-generated method stub
 
 	}
+
 }

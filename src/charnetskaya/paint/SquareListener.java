@@ -1,18 +1,17 @@
 package charnetskaya.paint;
 
 import java.awt.Graphics2D;
-import java.io.IOException;
 
 public class SquareListener extends DrawShapes {
 
-	public SquareListener(Canvas canvas, Paint frame) {
-		super(canvas, frame);
+	public SquareListener(Canvas canvas) {
+		super(canvas);
 	}
 
 	@Override
-	public void draw(Graphics2D g2) throws IOException {
+	public void permanentDraw(Graphics2D g2) {
 
-		super.draw(g2);
+		super.permanentDraw(g2);
 		g2.drawRect(initX, initY, w, h);
 	}
 

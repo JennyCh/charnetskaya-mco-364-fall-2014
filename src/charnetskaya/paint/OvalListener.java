@@ -6,15 +6,15 @@ public class OvalListener extends DrawShapes {
 
 	private Paint frame;
 
-	public OvalListener(Canvas canvas, Paint frame) {
-		super(canvas, frame);
+	public OvalListener(Canvas canvas) {
+		super(canvas);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void draw(Graphics2D g2) {
+	public void permanentDraw(Graphics2D g2) {
 		// TODO Auto-generated method stub
-		super.draw(g2);
+		super.permanentDraw(g2);
 		g2.drawOval(initX, initY, w, h);
 
 	}

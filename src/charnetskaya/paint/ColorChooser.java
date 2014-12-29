@@ -11,27 +11,30 @@ import javax.swing.JFrame;
 
 public class ColorChooser extends JFrame {
 
-	private static final long serialVersionUID = 1L;
 	private final Canvas canvas;
-	private Color color;
-	private final JColorChooser chooser;
-	private final JButton button;
 	private final JButton colorButton;
+
+	private final JButton selectButton;
+
+	private final JColorChooser chooser;
+
+	private Color color;
 
 	public ColorChooser(Canvas canvas, JButton colorButton) {
 		this.canvas = canvas;
-		this.setLocationRelativeTo(null);
-		this.setSize(300, 300);
-		this.button = new JButton("Select");
-		this.button.addActionListener(new SelectButtonListener());
-		this.chooser = new JColorChooser();
-		this.chooser.add(button, BorderLayout.SOUTH);
 		this.colorButton = colorButton;
 
+		this.setLocationRelativeTo(null);
+		this.setSize(300, 300);
+
+		this.selectButton = new JButton("Select");
+		this.selectButton.addActionListener(new SelectButtonListener());
+
+		this.chooser = new JColorChooser();
+		this.chooser.add(selectButton, BorderLayout.SOUTH);
+
 		this.add(chooser);
-
 		this.setVisible(true);
-
 	}
 
 	private class SelectButtonListener implements ActionListener {
