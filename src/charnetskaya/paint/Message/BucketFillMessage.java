@@ -22,7 +22,7 @@ public class BucketFillMessage implements PaintMessage {
 
 	@Override
 	public String toString() {
-		return x + " " + y + " " + color;
+		return x + " " + y + " " + color + "\n";
 	}
 
 	public int getX() {

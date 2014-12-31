@@ -37,7 +37,7 @@ public class Canvas extends JComponent implements MouseWheelListener {
 		// this.settings = new Settings();
 		this.settings = new Settings();
 
-		this.listener = new PenDrawListener(this);
+		this.listener = new PenDrawListener(this, paint.getRightPanel());
 		this.addMouseListener(listener);
 		this.addMouseMotionListener(listener);
 		for (int layer = 0; layer < MAX_LAYERS; layer++) {

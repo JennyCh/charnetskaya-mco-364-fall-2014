@@ -21,18 +21,23 @@ public class ShapeMessage implements PaintMessage {
 		switch (shape) {
 
 		case OVAL:
+			if(!fill){
 			g2.drawOval(x, y, width, height);
-			break;
-		case FILL_OVAL:
-			g2.fillOval(x, y, width, height);
-			break;
+			}
+			else{
+				g2.fillOval(x, y, width, height);
+			}
+			break;		
+			
 		case RECT:
+			if(!fill){
 			g2.drawRect(x, y, width, height);
+			}
+			else{
+				g2.fillRect(x, y, width, height);
+			}
 			break;
-		case FILL_RECT:
-			g2.fillRect(x, y, width, height);
-			break;
-
+		
 		}
 	}
 

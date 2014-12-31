@@ -76,7 +76,7 @@ public class RightPanel extends JPanel {
 			// TODO Auto-generated method stub
 
 			if (event.getSource() == drawPencilButton) {
-				canvas.setListeners(new PenDrawListener(canvas));
+				canvas.setListeners(new PenDrawListener(canvas, rightPanel));
 			} else if (event.getSource() == colorButton) {
 				new ColorChooser(canvas, colorButton);
 			} else if (event.getSource() == bucketFill) {

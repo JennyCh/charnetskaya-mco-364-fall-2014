@@ -27,7 +27,7 @@ public class FillSquareListener extends DrawShapes {
 		prev = false;
 		permanentDraw((Graphics2D) canvas.getImages().get(canvas.getActiveLayer()).getGraphics());
 
-		final ShapeMessage shape = new ShapeMessage(ShapeType.FILL_RECT, initX, initY, w, h, super.canvas.getSettings()
+		final ShapeMessage shape = new ShapeMessage(ShapeType.RECT, initX, initY, w, h, super.canvas.getSettings()
 				.getColor().getRGB(), super.canvas.getSettings().getStrokeSize(), true);
 		rightPanel.getNetwork().sendMessage(shape);
 	}
