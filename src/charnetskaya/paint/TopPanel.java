@@ -13,18 +13,27 @@ public class TopPanel extends JPanel {
 	private final JButton clearLayer;
 	private final JTextField strokeSize;
 
+	private final JButton network;
+
+	private final Paint paint;
+
 	// private final JButton saveImage;
 
-	public TopPanel(Canvas canvas) {
+	public TopPanel(Canvas canvas, Paint paint) {
 		this.canvas = canvas;
+		this.paint = paint;
 		this.setBackground(Color.gray);
 		this.clearLayer = new JButton("Clear");
 		this.strokeSize = new JTextField(String.valueOf(canvas.getSettings().getStrokeSize()));
 		this.strokeSize.setSize(10, 20);
+		this.network = new JButton("Connect");
 
 		this.add(clearLayer);
 		this.add(strokeSize);
+		this.add(network);
+		this.network.addActionListener(new NetworkListener(canvas, paint.getRightPanel()));
 		this.clearLayer.addActionListener(new ButtonListener());
+
 		// saveImage = new JButton("Save Image");
 		// saveImage.addActionListener(new ButtonListener());
 		// this.add(saveImage);
@@ -37,7 +46,7 @@ public class TopPanel extends JPanel {
 			// TODO Auto-generated method stub
 			if (event.getSource() == clearLayer) {
 				canvas.setClearBackground(canvas.getActiveLayer());
-			} /*
+			}/*
 			 * else if (event.getSource() == saveImage) { try {
 			 * 
 			 * ImageIO.write(canvas.getImages().get(canvas.getActiveLayer()),

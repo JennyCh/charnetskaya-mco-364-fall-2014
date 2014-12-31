@@ -1,6 +1,8 @@
 package charnetskaya.paint;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
+import java.net.UnknownHostException;
 
 import javax.swing.JFrame;
 
@@ -17,17 +19,16 @@ public class Paint extends JFrame {
 
 	private final RightPanel rightPanel;
 
-	public Paint() {
+	public Paint() throws UnknownHostException, IOException {
 		this.setSize(WIDTH, HEIGHT);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setTitle("Paint");
 		this.setLocationRelativeTo(null);
 
 		this.canvas = new Canvas(this);
-
-		this.leftPanel = new LeftPanel(canvas);
-		this.topPanel = new TopPanel(canvas);
 		this.rightPanel = new RightPanel(canvas);
+		this.leftPanel = new LeftPanel(canvas);
+		this.topPanel = new TopPanel(canvas, this);
 
 		this.add(topPanel, BorderLayout.NORTH);
 		this.add(canvas, BorderLayout.CENTER);
@@ -35,9 +36,10 @@ public class Paint extends JFrame {
 		this.add(rightPanel, BorderLayout.WEST);
 
 		this.setVisible(true);
+		// new PaintMessageFactory(canvas);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnknownHostException, IOException {
 		new Paint();
 	}
 

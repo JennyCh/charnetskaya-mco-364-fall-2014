@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 
 public abstract class DrawShapes implements DrawListenerInterface {
-	private final Canvas canvas;
+	protected final Canvas canvas;
 
 	protected int x;
 	protected int y;
@@ -14,10 +14,12 @@ public abstract class DrawShapes implements DrawListenerInterface {
 	protected int h;
 	protected int initX;
 	protected int initY;
-	private boolean prev;
+	protected boolean prev;
+	protected final RightPanel rightPanel;
 
-	public DrawShapes(Canvas canvas) {
+	public DrawShapes(Canvas canvas, RightPanel rightPanel) {
 		this.canvas = canvas;
+		this.rightPanel = rightPanel;
 	}
 
 	@Override
@@ -55,24 +57,25 @@ public abstract class DrawShapes implements DrawListenerInterface {
 		this.y = e.getY();
 		this.x2 = x;
 		this.y2 = y;
-		previewDraw((Graphics2D) canvas.getGraphics());
+		// previewDraw((Graphics2D) canvas.getGraphics());
 		// System.out.println("pressed");
 		canvas.repaint();
 	}
 
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		prev = false;
-		permanentDraw((Graphics2D) canvas.getImages().get(canvas.getActiveLayer()).getGraphics());
-
-	}
+	/*
+	 * @Override public void mouseReleased(MouseEvent e) { prev = false;
+	 * permanentDraw((Graphics2D)
+	 * canvas.getImages().get(canvas.getActiveLayer()).getGraphics());
+	 * 
+	 * }
+	 */
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
 
 		this.x2 = e.getX();
 		this.y2 = e.getY();
-		previewDraw((Graphics2D) canvas.getGraphics());
+		// previewDraw((Graphics2D) canvas.getGraphics());
 		this.canvas.repaint();
 
 	}

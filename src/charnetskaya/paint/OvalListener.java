@@ -1,13 +1,17 @@
 package charnetskaya.paint;
 
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
+
+import charnetskaya.paint.Message.ShapeMessage;
+import charnetskaya.paint.Message.ShapeType;
 
 public class OvalListener extends DrawShapes {
 
 	private Paint frame;
 
-	public OvalListener(Canvas canvas) {
-		super(canvas);
+	public OvalListener(Canvas canvas, RightPanel rightPanel) {
+		super(canvas, rightPanel);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -19,4 +23,14 @@ public class OvalListener extends DrawShapes {
 
 	}
 
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		prev = false;
+		// permanentDraw((Graphics2D)
+		// canvas.getImages().get(canvas.getActiveLayer()).getGraphics());
+		permanentDraw((Graphics2D) canvas.getImages().get(canvas.getActiveLayer()).getGraphics());
+		final ShapeMessage shape = new ShapeMessage(ShapeType.OVAL, initX, initY, w, h, super.canvas.getSettings()
+				.getColor().getRGB(), super.canvas.getSettings().getStrokeSize(), false);
+		rightPanel.getNetwork().sendMessage(shape);
+	}
 }

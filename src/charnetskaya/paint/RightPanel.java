@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -18,11 +19,21 @@ public class RightPanel extends JPanel {
 
 	private final Canvas canvas;
 
+	private NetworkModuleInterface network;
+
+	public NetworkModuleInterface getNetwork() {
+		return network;
+	}
+
+	public void setNetwork(NetworkModuleInterface network) {
+		this.network = network;
+	}
+
 	public RightPanel(Canvas canvas) {
 		this.canvas = canvas;
 		this.setBackground(Color.gray);
 		this.setLayout(new GridLayout(10, 1));
-		this.drawPencilButton = new JButton("Pen");
+		this.drawPencilButton = new JButton(new ImageIcon("/Line.jpg"));
 
 		this.bucketFill = new JButton("Fill");
 		this.oval = new JButton("Oval");
@@ -39,16 +50,26 @@ public class RightPanel extends JPanel {
 		this.add(fillOval);
 		this.add(rect);
 		this.add(fillRect);
-		this.drawPencilButton.addActionListener(new ButtonListener());
-		this.bucketFill.addActionListener(new ButtonListener());
-		this.oval.addActionListener(new ButtonListener());
-		this.fillOval.addActionListener(new ButtonListener());
-		this.rect.addActionListener(new ButtonListener());
-		this.fillRect.addActionListener(new ButtonListener());
-		this.colorButton.addActionListener(new ButtonListener());
+		this.drawPencilButton.addActionListener(new ButtonListener(this));
+		this.bucketFill.addActionListener(new ButtonListener(this));
+		this.oval.addActionListener(new ButtonListener(this));
+		this.fillOval.addActionListener(new ButtonListener(this));
+		this.rect.addActionListener(new ButtonListener(this));
+		this.fillRect.addActionListener(new ButtonListener(this));
+		this.colorButton.addActionListener(new ButtonListener(this));
+	}
+
+	public void setNetwordModule(NetworkModuleInterface module) {
+		this.network = module;
 	}
 
 	private class ButtonListener implements ActionListener {
+
+		private final RightPanel rightPanel;
+
+		private ButtonListener(RightPanel rightPanel) {
+			this.rightPanel = rightPanel;
+		}
 
 		@Override
 		public void actionPerformed(ActionEvent event) {
@@ -60,15 +81,15 @@ public class RightPanel extends JPanel {
 				new ColorChooser(canvas, colorButton);
 			} else if (event.getSource() == bucketFill) {
 				// System.out.println("filled");
-				canvas.setListeners(new BucketFillListener(canvas));
+				canvas.setListeners(new BucketFillListener(canvas, rightPanel));
 			} else if (event.getSource() == oval) {
-				canvas.setListeners(new OvalListener(canvas));
+				canvas.setListeners(new OvalListener(canvas, rightPanel));
 			} else if (event.getSource() == fillOval) {
-				canvas.setListeners(new FillOvalListener(canvas));
+				canvas.setListeners(new FillOvalListener(canvas, rightPanel));
 			} else if (event.getSource() == rect) {
-				canvas.setListeners(new SquareListener(canvas));
+				canvas.setListeners(new SquareListener(canvas, rightPanel));
 			} else if (event.getSource() == fillRect) {
-				canvas.setListeners(new FillSquareListener(canvas));
+				canvas.setListeners(new FillSquareListener(canvas, rightPanel));
 			}
 		}
 	}

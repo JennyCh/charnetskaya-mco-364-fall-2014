@@ -12,7 +12,7 @@ public class BucketFillListener implements DrawListenerInterface {
 	private final Stack<Point> stack;
 	private final Canvas canvas;
 
-	public BucketFillListener(Canvas canvas) {
+	public BucketFillListener(Canvas canvas, RightPanel rightPanel) {
 		// TODO Auto-generated constructor stub
 		this.stack = new Stack<Point>();
 		this.canvas = canvas;
