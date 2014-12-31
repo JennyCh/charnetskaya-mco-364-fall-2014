@@ -15,7 +15,7 @@ public class OnlineNetworkModule implements NetworkModuleInterface {
 	@Override
 	public void sendMessage(PaintMessage message) {
 		// TODO Auto-generated method stub
-		write.print("SHAPE " + message.toString() + "\n");
+		write.print(message.toString() + "\n");
 		// System.out.println(write.toString());
 		System.out.println("writing " + message.toString());
 		write.flush();
