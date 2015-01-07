@@ -27,8 +27,9 @@ public class SquareListener extends DrawShapes {
 
 		final ShapeMessage shape = new ShapeMessage(ShapeType.RECT, initX, initY, w, h, super.canvas.getSettings()
 				.getColor().getRGB(), super.canvas.getSettings().getStrokeSize(), false);
-
-		rightPanel.getNetwork().sendMessage(shape);
+		if (rightPanel.getNetwork() != null) {
+			rightPanel.getNetwork().sendMessage(shape);
+		}
 	}
 
 }

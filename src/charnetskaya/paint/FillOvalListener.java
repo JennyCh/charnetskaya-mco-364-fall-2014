@@ -29,7 +29,9 @@ public class FillOvalListener extends DrawShapes {
 
 		final ShapeMessage shape = new ShapeMessage(ShapeType.OVAL, initX, initY, w, h, super.canvas.getSettings()
 				.getColor().getRGB(), super.canvas.getSettings().getStrokeSize(), true);
-		rightPanel.getNetwork().sendMessage(shape);
+		if (rightPanel.getNetwork() != null) {
+			rightPanel.getNetwork().sendMessage(shape);
+		}
 	}
 
 }

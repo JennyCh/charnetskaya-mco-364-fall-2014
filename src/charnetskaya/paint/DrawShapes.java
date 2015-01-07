@@ -75,7 +75,7 @@ public abstract class DrawShapes implements DrawListenerInterface {
 
 		this.x2 = e.getX();
 		this.y2 = e.getY();
-		// previewDraw((Graphics2D) canvas.getGraphics());
+		previewDraw((Graphics2D) canvas.getGraphics());
 		this.canvas.repaint();
 
 	}

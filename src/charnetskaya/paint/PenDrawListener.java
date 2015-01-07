@@ -64,8 +64,11 @@ public class PenDrawListener implements DrawListenerInterface {
 
 		permanentDraw(g2);
 		final LineMessage line = new LineMessage(x1, y1, x2, y2, canvas.getSettings().getColor().getRGB(), canvas.getSettings().getStrokeSize());
+		System.out.println (rightPanel == null);
+		if(rightPanel != null){
 		rightPanel.getNetwork().sendMessage(line);
-
+		}
+		
 		x1 = x2;
 		y1 = y2;
 		

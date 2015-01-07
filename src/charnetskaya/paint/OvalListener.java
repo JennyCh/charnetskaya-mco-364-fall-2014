@@ -31,6 +31,8 @@ public class OvalListener extends DrawShapes {
 		permanentDraw((Graphics2D) canvas.getImages().get(canvas.getActiveLayer()).getGraphics());
 		final ShapeMessage shape = new ShapeMessage(ShapeType.OVAL, initX, initY, w, h, super.canvas.getSettings()
 				.getColor().getRGB(), super.canvas.getSettings().getStrokeSize(), false);
+		if(rightPanel.getNetwork() != null){
 		rightPanel.getNetwork().sendMessage(shape);
+		}
 	}
 }

@@ -30,8 +30,18 @@ public class BucketFillListener implements DrawListenerInterface {
 		// System.out.println(initColor);
 		boolean left, right;
 		int tempY;
-		stack.push(new Point(x, y));
+		
 		// System.out.println(stack.size());
+		System.out.println ("here" + img.getRGB(x, y) + " " + Color.BLACK.getRGB());
+		if(img.getRGB(x, y) == 0){
+			System.out.println ("here");
+			//g2.drawLine(0, 0, 800, 800);
+			g2.fillRect(0, 0, img.getWidth(), img.getHeight());
+		}else{
+			stack.push(new Point(x, y));
+			
+		}
+		
 		final int i = 1;
 		while (!stack.isEmpty()) {
 			final Point p = stack.pop();
@@ -39,8 +49,12 @@ public class BucketFillListener implements DrawListenerInterface {
 			final int activeY = (int) p.getY();
 
 			tempY = activeY;
+//System.out.println ("Color " + g2.getColor().toString());
+			//System.out.println("initColor " + initColor + " getRGB" + new Color(img.getRGB(activeX, tempY)));
 			while (tempY >= 0 && initColor.equals((new Color(img.getRGB(activeX, tempY))))) {
-				tempY--;
+				--tempY;
+			
+				//System.out.println (tempY);
 			}
 			tempY++;
 
@@ -50,6 +64,7 @@ public class BucketFillListener implements DrawListenerInterface {
 
 			while (tempY < height && initColor.equals(new Color(img.getRGB(activeX, tempY)))) {
 				g2.drawLine(activeX, tempY, activeX, tempY);
+				canvas.repaint();
 
 				if (!left && activeX > 0 && initColor.equals(new Color(img.getRGB(activeX - 1, tempY)))) {
 					stack.add(new Point(activeX - 1, tempY));
