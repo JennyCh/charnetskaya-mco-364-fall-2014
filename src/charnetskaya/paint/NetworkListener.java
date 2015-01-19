@@ -52,7 +52,7 @@ public class NetworkListener implements ActionListener {
 
 		this.reciever = new RecieveMessagesFromServer(canvas, rightPanel, true);
 		reciever.start();
-		networkButton.setText("Connected");
+		networkButton.setText("Disconnect from Network");
 
 	}
 
@@ -61,7 +61,7 @@ public class NetworkListener implements ActionListener {
 		connected = false;
 		reciever.setConnected(false);
 		rightPanel.setNetwordModule(new LoopBackNetworkModule(canvas));
-		networkButton.setText("Disconnect");
+		networkButton.setText("Connect to Network");
 
 	}
 

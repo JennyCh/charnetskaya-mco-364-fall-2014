@@ -57,38 +57,41 @@ public class RecieveMessagesFromServer extends Thread {
 		if (connected) {
 			super.run();
 
-			
-				try {
-					// schwimmer's computer IP - 192.168.117.107
-					socket = new Socket("192.168.117.107", 3773);
-					final PrintWriter writer = new PrintWriter(socket.getOutputStream());
-					// System.out.println(panel);
-					panel.setNetwordModule(new OnlineNetworkModule(writer));
-					final InputStream in = socket.getInputStream();
-					final BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-					String message;
-					// System.out.println("here");
-					while (true) {
+			try {
+				// schwimmer's computer IP - 192.168.117.107
+				socket = new Socket("localhost", 3773);
+				final PrintWriter writer = new PrintWriter(socket.getOutputStream());
+				// System.out.println(panel);
+				panel.setNetwordModule(new OnlineNetworkModule(writer));
+				final InputStream in = socket.getInputStream();
+				final BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+				String message;
+				// System.out.println("here");
+				while (true) {
 					while ((message = reader.readLine()) != null && connected) {
 						System.out.println("recieved message " + message);
 						if (!"".equals(message)) {
 							final PaintMessage msg = paintFactory.getMessage(message);
 							if (message != null) {
-								try{
-								msg.apply((Graphics2D) canvas.getImages().get(canvas.getActiveLayer()).getGraphics());
-								}catch(Exception e){
+								try {
+									System.out.print("IS ACTIVE LAYER ");
+									System.out.println(canvas.getImages().get(canvas.getActiveLayer()) == null);
+									msg.apply((Graphics2D) canvas.getImages().get(canvas.getActiveLayer())
+											.getGraphics());
+								} catch (final Exception e) {
 									e.printStackTrace();
 								}
 								canvas.repaint();
 							}
 						}
-					}}
-				} catch (final Exception e) {
-					e.printStackTrace();
-					System.out.println ("EXCEPTION!!!!!!!!!!!!!!!!");
+					}
 				}
-				
+			} catch (final Exception e) {
+				e.printStackTrace();
+				System.out.println("EXCEPTION!!!!!!!!!!!!!!!!");
 			}
-		
+
+		}
+
 	}
 }

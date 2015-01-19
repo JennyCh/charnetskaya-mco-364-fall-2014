@@ -7,10 +7,13 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.Stack;
 
+import charnetskaya.paint.Message.BucketFillMessage;
+
 public class BucketFillListener implements DrawListenerInterface {
 
 	private final Stack<Point> stack;
 	private final Canvas canvas;
+	private int x, y;
 
 	public BucketFillListener(Canvas canvas, RightPanel rightPanel) {
 		// TODO Auto-generated constructor stub
@@ -23,38 +26,33 @@ public class BucketFillListener implements DrawListenerInterface {
 		final BufferedImage img = canvas.getImages().get(canvas.getActiveLayer());
 		final Graphics2D g2 = (Graphics2D) img.getGraphics();
 		g2.setColor(canvas.getSettings().getColor());
-		final int x = e.getX();
-		final int y = e.getY();
+		x = e.getX();
+		y = e.getY();
 
-		final Color initColor = new Color(img.getRGB(x, y));
-		// System.out.println(initColor);
+		final Color initColor = new Color(img.getRGB(x, y), true);
+		System.out.println(initColor.toString() + " " + initColor.getAlpha());
+
+		/*
+		 * same color was hit
+		 */
+		if (new Color(initColor.getRGB(), true) == (new Color(g2.getColor().getRGB(), true))) {
+			return;
+		}
 		boolean left, right;
 		int tempY;
-		
-		// System.out.println(stack.size());
-		System.out.println ("here" + img.getRGB(x, y) + " " + Color.BLACK.getRGB());
-		if(img.getRGB(x, y) == 0){
-			System.out.println ("here");
-			//g2.drawLine(0, 0, 800, 800);
-			g2.fillRect(0, 0, img.getWidth(), img.getHeight());
-		}else{
-			stack.push(new Point(x, y));
-			
-		}
-		
-		final int i = 1;
+
+		stack.push(new Point(x, y));
 		while (!stack.isEmpty()) {
 			final Point p = stack.pop();
 			final int activeX = (int) p.getX();
 			final int activeY = (int) p.getY();
 
 			tempY = activeY;
-//System.out.println ("Color " + g2.getColor().toString());
-			//System.out.println("initColor " + initColor + " getRGB" + new Color(img.getRGB(activeX, tempY)));
-			while (tempY >= 0 && initColor.equals((new Color(img.getRGB(activeX, tempY))))) {
+
+			while (tempY >= 0
+					&& (new Color(initColor.getRGB(), true).equals(new Color(img.getRGB(activeX, tempY), true)))) {
 				--tempY;
-			
-				//System.out.println (tempY);
+
 			}
 			tempY++;
 
@@ -62,21 +60,35 @@ public class BucketFillListener implements DrawListenerInterface {
 			final int width = img.getWidth();
 			final int height = img.getHeight();
 
-			while (tempY < height && initColor.equals(new Color(img.getRGB(activeX, tempY)))) {
+			while (tempY < height
+					&& (new Color(initColor.getRGB(), true).equals(new Color(img.getRGB(activeX, tempY), true)))) {
 				g2.drawLine(activeX, tempY, activeX, tempY);
-				canvas.repaint();
 
-				if (!left && activeX > 0 && initColor.equals(new Color(img.getRGB(activeX - 1, tempY)))) {
+				if (!left && activeX > 0
+						&& new Color(initColor.getRGB(), true).equals(new Color(img.getRGB(activeX - 1, tempY), true))) {
 					stack.add(new Point(activeX - 1, tempY));
 					left = true;
-				} else if (left && activeX > 0 && !initColor.equals(new Color(img.getRGB(activeX - 1, tempY)))) {
+					// System.out.println("LEFT " + initColor + "==" + new
+					// Color(img.getRGB(activeX - 1, tempY)));
+				} else if (left
+						&& activeX > 0
+						&& !(new Color(initColor.getRGB(), true)
+						.equals(new Color(img.getRGB(activeX - 1, tempY), true)))) {
 					left = false;
 				}
 
-				if (!right && activeX < width - 1 && initColor.equals(new Color(img.getRGB(activeX + 1, tempY)))) {
+				if (!right
+						&& activeX < width - 1
+						&& (new Color(initColor.getRGB(), true).equals(new Color(img.getRGB(activeX + 1, tempY), true)))) {
+
 					stack.add(new Point(activeX + 1, tempY));
 					right = true;
-				} else if (right && activeX < width - 1 && !initColor.equals(new Color(img.getRGB(activeX + 1, tempY)))) {
+					// System.out.println("RIGHT " + initColor + "==" + new
+					// Color(img.getRGB(activeX + 1, tempY)));
+				} else if (right
+						&& activeX < width - 1
+						&& !(new Color(initColor.getRGB(), true)
+						.equals(new Color(img.getRGB(activeX + 1, tempY), true)))) {
 					right = false;
 				}
 				tempY++;
@@ -84,6 +96,12 @@ public class BucketFillListener implements DrawListenerInterface {
 			// System.out.println(i++);
 		}
 		canvas.repaint();
+		if (canvas.getPaint().getRightPanel().getNetwork() != null) {
+			canvas.getPaint().getRightPanel().getNetwork()
+			.sendMessage(new BucketFillMessage(x, y, canvas.getSettings().getColor().getRGB(), canvas));
+
+			System.out.println("PASSING COLOR TO MESSAGE " + canvas.getSettings().getColor().getRGB());
+		}
 	}
 
 	@Override
@@ -108,6 +126,7 @@ public class BucketFillListener implements DrawListenerInterface {
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		// System.out.println("released");
+
 	}
 
 	@Override

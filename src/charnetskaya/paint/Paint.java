@@ -30,6 +30,8 @@ public class Paint extends JFrame {
 		this.leftPanel = new LeftPanel(canvas);
 		this.topPanel = new TopPanel(canvas, this);
 
+		this.canvas.setListeners(new PenDrawListener(canvas, rightPanel));
+
 		this.add(topPanel, BorderLayout.NORTH);
 		this.add(canvas, BorderLayout.CENTER);
 		this.add(leftPanel, BorderLayout.EAST);

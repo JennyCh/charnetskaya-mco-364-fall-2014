@@ -22,9 +22,8 @@ public class Canvas extends JComponent implements MouseWheelListener {
 
 	private final int imageWidth = 800;
 	private final int imageHeight = 800;
-
-	private final Settings settings;
 	private final Paint paint;
+	private final Settings settings;
 
 	public void setActiveLayer(int activeLayer) {
 		this.activeLayer = activeLayer;
@@ -37,10 +36,10 @@ public class Canvas extends JComponent implements MouseWheelListener {
 		// this.settings = new Settings();
 		this.settings = new Settings();
 
-	//	this.listener = new PenDrawListener(this, paint.getRightPanel());
-	///	this.addMouseListener(listener);
-	//	this.addMouseMotionListener(listener);
-		setListeners(new PenDrawListener(this, paint.getRightPanel()));
+		// this.listener = new PenDrawListener(this, paint.getRightPanel());
+		// / this.addMouseListener(listener);
+		// this.addMouseMotionListener(listener);
+		// setListeners(new PenDrawListener(this, paint.getRightPanel()));
 		for (int layer = 0; layer < MAX_LAYERS; layer++) {
 			images.add(new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB_PRE));
 
@@ -60,20 +59,22 @@ public class Canvas extends JComponent implements MouseWheelListener {
 		super.paintComponent(g);
 
 		for (int layer = 0; layer < MAX_LAYERS; layer++) {
+			g.drawImage(images.get(layer), 0, 0, null);
 			if (layer == activeLayer) {
 				listener.previewDraw((Graphics2D) g);
 			}
-			g.drawImage(images.get(layer), 0, 0, null);
+
 			// System.out.println(settings.getColor());
 
 		}
-		this.repaint();
+		paint.repaint();
 	}
 
 	public void setClearBackground(int layerNumber) {
 		final BufferedImage img = images.get(layerNumber);
 		final Graphics2D g2 = (Graphics2D) img.getGraphics();
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.CLEAR));
+		// g2.setColor(Color.white); // sets white background
 		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 	}
 
@@ -137,6 +138,14 @@ public class Canvas extends JComponent implements MouseWheelListener {
 
 		// defaultSettings((Graphics2D) this.getGraphics());
 
+	}
+
+	public Paint getPaint() {
+		return paint;
+	}
+
+	public void setListener(DrawListenerInterface listener) {
+		this.listener = listener;
 	}
 
 }

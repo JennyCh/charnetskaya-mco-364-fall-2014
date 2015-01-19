@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import charnetskaya.paint.Message.ClearMessage;
+
 public class TopPanel extends JPanel {
 	private final Canvas canvas;
 	private final JButton clearLayer;
@@ -46,16 +48,20 @@ public class TopPanel extends JPanel {
 			// TODO Auto-generated method stub
 			if (event.getSource() == clearLayer) {
 				canvas.setClearBackground(canvas.getActiveLayer());
+				if (canvas.getPaint().getRightPanel().getNetwork() != null) {
+					canvas.getPaint().getRightPanel().getNetwork().sendMessage(new ClearMessage(canvas));
+
+				}
 			}/*
-			 * else if (event.getSource() == saveImage) { try {
-			 * 
-			 * ImageIO.write(canvas.getImages().get(canvas.getActiveLayer()),
-			 * "jpg", new File( "C:/Users/Jenny/Desktop/image.jpg"));
-			 * 
-			 * } catch (final IOException e) { e.printStackTrace();
-			 * 
-			 * } }
-			 */
+				 * else if (event.getSource() == saveImage) { try {
+				 * 
+				 * ImageIO.write(canvas.getImages().get(canvas.getActiveLayer()),
+				 * "jpg", new File( "C:/Users/Jenny/Desktop/image.jpg"));
+				 * 
+				 * } catch (final IOException e) { e.printStackTrace();
+				 * 
+				 * } }
+				 */
 		}
 	}
 
