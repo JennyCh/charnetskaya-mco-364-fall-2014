@@ -20,8 +20,8 @@ public class Canvas extends JComponent implements MouseWheelListener {
 
 	private final int MAX_LAYERS = 4;
 
-	private final int imageWidth = 800;
-	private final int imageHeight = 800;
+	private final int imageWidth;
+	private final int imageHeight;
 	private final Paint paint;
 	private final Settings settings;
 
@@ -35,6 +35,8 @@ public class Canvas extends JComponent implements MouseWheelListener {
 		this.activeLayer = 0;
 		// this.settings = new Settings();
 		this.settings = new Settings();
+		this.imageHeight = paint.getHEIGHT();
+		this.imageWidth = paint.getWIDTH();
 
 		// this.listener = new PenDrawListener(this, paint.getRightPanel());
 		// / this.addMouseListener(listener);

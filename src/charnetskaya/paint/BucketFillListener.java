@@ -35,65 +35,69 @@ public class BucketFillListener implements DrawListenerInterface {
 		/*
 		 * same color was hit
 		 */
-		if (new Color(initColor.getRGB(), true) == (new Color(g2.getColor().getRGB(), true))) {
-			return;
-		}
-		boolean left, right;
-		int tempY;
+		if (new Color(initColor.getRGB(), true).equals(new Color(g2.getColor().getRGB(), true))) {
 
-		stack.push(new Point(x, y));
-		while (!stack.isEmpty()) {
-			final Point p = stack.pop();
-			final int activeX = (int) p.getX();
-			final int activeY = (int) p.getY();
+		} else {
+			boolean left, right;
+			int tempY;
 
-			tempY = activeY;
+			stack.push(new Point(x, y));
+			while (!stack.isEmpty()) {
+				final Point p = stack.pop();
+				final int activeX = (int) p.getX();
+				final int activeY = (int) p.getY();
 
-			while (tempY >= 0
-					&& (new Color(initColor.getRGB(), true).equals(new Color(img.getRGB(activeX, tempY), true)))) {
-				--tempY;
+				tempY = activeY;
 
-			}
-			tempY++;
+				while (tempY >= 0
+						&& (new Color(initColor.getRGB(), true).equals(new Color(img.getRGB(activeX, tempY), true)))) {
+					--tempY;
 
-			left = right = false;
-			final int width = img.getWidth();
-			final int height = img.getHeight();
-
-			while (tempY < height
-					&& (new Color(initColor.getRGB(), true).equals(new Color(img.getRGB(activeX, tempY), true)))) {
-				g2.drawLine(activeX, tempY, activeX, tempY);
-
-				if (!left && activeX > 0
-						&& new Color(initColor.getRGB(), true).equals(new Color(img.getRGB(activeX - 1, tempY), true))) {
-					stack.add(new Point(activeX - 1, tempY));
-					left = true;
-					// System.out.println("LEFT " + initColor + "==" + new
-					// Color(img.getRGB(activeX - 1, tempY)));
-				} else if (left
-						&& activeX > 0
-						&& !(new Color(initColor.getRGB(), true)
-						.equals(new Color(img.getRGB(activeX - 1, tempY), true)))) {
-					left = false;
-				}
-
-				if (!right
-						&& activeX < width - 1
-						&& (new Color(initColor.getRGB(), true).equals(new Color(img.getRGB(activeX + 1, tempY), true)))) {
-
-					stack.add(new Point(activeX + 1, tempY));
-					right = true;
-					// System.out.println("RIGHT " + initColor + "==" + new
-					// Color(img.getRGB(activeX + 1, tempY)));
-				} else if (right
-						&& activeX < width - 1
-						&& !(new Color(initColor.getRGB(), true)
-						.equals(new Color(img.getRGB(activeX + 1, tempY), true)))) {
-					right = false;
 				}
 				tempY++;
+
+				left = right = false;
+				final int width = img.getWidth();
+				final int height = img.getHeight();
+
+				while (tempY < height
+						&& (new Color(initColor.getRGB(), true).equals(new Color(img.getRGB(activeX, tempY), true)))) {
+					g2.drawLine(activeX, tempY, activeX, tempY);
+
+					if (!left
+							&& activeX > 0
+							&& new Color(initColor.getRGB(), true).equals(new Color(img.getRGB(activeX - 1, tempY),
+									true))) {
+						stack.add(new Point(activeX - 1, tempY));
+						left = true;
+						// System.out.println("LEFT " + initColor + "==" + new
+						// Color(img.getRGB(activeX - 1, tempY)));
+					} else if (left
+							&& activeX > 0
+							&& !(new Color(initColor.getRGB(), true).equals(new Color(img.getRGB(activeX - 1, tempY),
+									true)))) {
+						left = false;
+					}
+
+					if (!right
+							&& activeX < width - 1
+							&& (new Color(initColor.getRGB(), true).equals(new Color(img.getRGB(activeX + 1, tempY),
+									true)))) {
+
+						stack.add(new Point(activeX + 1, tempY));
+						right = true;
+						// System.out.println("RIGHT " + initColor + "==" + new
+						// Color(img.getRGB(activeX + 1, tempY)));
+					} else if (right
+							&& activeX < width - 1
+							&& !(new Color(initColor.getRGB(), true).equals(new Color(img.getRGB(activeX + 1, tempY),
+									true)))) {
+						right = false;
+					}
+					tempY++;
+				}
+				// System.out.println(i++);
 			}
-			// System.out.println(i++);
 		}
 		canvas.repaint();
 		if (canvas.getPaint().getRightPanel().getNetwork() != null) {

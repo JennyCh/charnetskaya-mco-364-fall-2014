@@ -78,8 +78,12 @@ public class RightPanel extends JPanel {
 		this.fillRect.setBorderPainted(false);
 		this.fillRect.setMargin(new Insets(0, 0, 0, 0));
 		this.fillRect.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		this.colorButton = new JButton("   ");
+
+		this.colorButton = new JButton("");
 		this.colorButton.setBackground(Color.black);
+		this.colorButton.setSize(200, 200);
+		this.colorButton.setBorderPainted(false);
+		this.colorButton.setMargin(new Insets(30, 15, 30, 15));
 		this.add(colorButton);
 
 		this.add(drawPencilButton);
