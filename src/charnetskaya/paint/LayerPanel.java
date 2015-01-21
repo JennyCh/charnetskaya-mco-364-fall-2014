@@ -8,13 +8,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class LeftPanel extends JPanel {
+public class LayerPanel extends JPanel {
 
 	private final Canvas canvas;
 
 	private final JButton layer1, layer2, layer3, layer0;
 
-	public LeftPanel(Canvas canvas) {
+	public LayerPanel(Canvas canvas) {
 		this.canvas = canvas;
 		this.setBackground(Color.gray);
 		this.layer0 = new JButton("Layer0");

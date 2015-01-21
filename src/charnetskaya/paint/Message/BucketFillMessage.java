@@ -144,8 +144,8 @@ public class BucketFillMessage implements PaintMessage {
 
 	@Override
 	public String toString() {
-		System.out.println("BUCKET_FILL" + " " + x + " " + y + " " + color + "\n");
-		return "BUCKET_FILL" + " " + x + " " + y + " " + color + "\n";
+	//	System.out.println("BUCKET_FILL" + " " + x + " " + y + " " + color + "\n");
+		return "BUCKET_FILL" + " " + x + " " + y + " " + color;
 	}
 
 	public int getX() {

@@ -10,7 +10,7 @@ public class OvalListener extends DrawShapes {
 
 	private Paint frame;
 
-	public OvalListener(Canvas canvas, RightPanel rightPanel) {
+	public OvalListener(Canvas canvas, ToolPanel rightPanel) {
 		super(canvas, rightPanel);
 		// TODO Auto-generated constructor stub
 	}

@@ -8,7 +8,7 @@ import charnetskaya.paint.Message.ShapeType;
 
 public class SquareListener extends DrawShapes {
 
-	public SquareListener(Canvas canvas, RightPanel rightPanel) {
+	public SquareListener(Canvas canvas, ToolPanel rightPanel) {
 		super(canvas, rightPanel);
 	}
 

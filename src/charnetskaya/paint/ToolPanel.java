@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class RightPanel extends JPanel {
+public class ToolPanel extends JPanel {
 
 	private final JButton drawPencilButton;
 	private final JButton bucketFill;
@@ -32,7 +32,7 @@ public class RightPanel extends JPanel {
 		this.network = network;
 	}
 
-	public RightPanel(Canvas canvas) {
+	public ToolPanel(Canvas canvas) {
 		this.canvas = canvas;
 		this.setBackground(Color.white);
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -107,9 +107,9 @@ public class RightPanel extends JPanel {
 
 	private class ButtonListener implements ActionListener {
 
-		private final RightPanel rightPanel;
+		private final ToolPanel rightPanel;
 
-		private ButtonListener(RightPanel rightPanel) {
+		private ButtonListener(ToolPanel rightPanel) {
 			this.rightPanel = rightPanel;
 		}
 

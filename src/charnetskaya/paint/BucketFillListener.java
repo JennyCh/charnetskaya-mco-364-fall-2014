@@ -15,7 +15,7 @@ public class BucketFillListener implements DrawListenerInterface {
 	private final Canvas canvas;
 	private int x, y;
 
-	public BucketFillListener(Canvas canvas, RightPanel rightPanel) {
+	public BucketFillListener(Canvas canvas, ToolPanel rightPanel) {
 		// TODO Auto-generated constructor stub
 		this.stack = new Stack<Point>();
 		this.canvas = canvas;
@@ -104,7 +104,7 @@ public class BucketFillListener implements DrawListenerInterface {
 			canvas.getPaint().getRightPanel().getNetwork()
 			.sendMessage(new BucketFillMessage(x, y, canvas.getSettings().getColor().getRGB(), canvas));
 
-			System.out.println("PASSING COLOR TO MESSAGE " + canvas.getSettings().getColor().getRGB());
+			//System.out.println("PASSING COLOR TO MESSAGE " + canvas.getSettings().getColor().getRGB());
 		}
 	}
 

@@ -15,9 +15,9 @@ public abstract class DrawShapes implements DrawListenerInterface {
 	protected int initX;
 	protected int initY;
 	protected boolean prev;
-	protected final RightPanel rightPanel;
+	protected final ToolPanel rightPanel;
 
-	public DrawShapes(Canvas canvas, RightPanel rightPanel) {
+	public DrawShapes(Canvas canvas, ToolPanel rightPanel) {
 		this.canvas = canvas;
 		this.rightPanel = rightPanel;
 	}

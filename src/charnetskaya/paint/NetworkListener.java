@@ -11,9 +11,9 @@ public class NetworkListener implements ActionListener {
 	private final Canvas canvas;
 	private boolean connected;
 	private RecieveMessagesFromServer reciever;
-	private final RightPanel rightPanel;
+	private final ToolPanel rightPanel;
 
-	public NetworkListener(Canvas canvas, RightPanel rightPanel) {
+	public NetworkListener(Canvas canvas, ToolPanel rightPanel) {
 		this.canvas = canvas;
 		this.connected = false;
 		this.rightPanel = rightPanel;

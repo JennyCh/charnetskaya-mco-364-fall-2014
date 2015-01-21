@@ -18,9 +18,9 @@ public class RecieveMessagesFromServer extends Thread {
 	private boolean connected;
 	private final PaintMessageFactory paintFactory;
 	private Socket socket;
-	private final RightPanel panel;
+	private final ToolPanel panel;
 
-	public RecieveMessagesFromServer(Canvas canvas, RightPanel panel, boolean connected) throws UnknownHostException,
+	public RecieveMessagesFromServer(Canvas canvas, ToolPanel panel, boolean connected) throws UnknownHostException,
 			IOException {
 		this.canvas = canvas;
 		this.connected = connected;
@@ -59,7 +59,7 @@ public class RecieveMessagesFromServer extends Thread {
 
 			try {
 				// schwimmer's computer IP - 192.168.117.107
-				socket = new Socket("localhost", 3773);
+				socket = new Socket("192.168.117.107", 3773);
 				final PrintWriter writer = new PrintWriter(socket.getOutputStream());
 				// System.out.println(panel);
 				panel.setNetwordModule(new OnlineNetworkModule(writer));

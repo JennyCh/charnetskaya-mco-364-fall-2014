@@ -26,7 +26,7 @@ public class ClearMessage implements PaintMessage {
 	@Override
 	public String toString() {
 
-		return "CLEAR\n";
+		return "CLEAR";
 	}
 
 }

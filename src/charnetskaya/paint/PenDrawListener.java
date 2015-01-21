@@ -9,14 +9,14 @@ public class PenDrawListener implements DrawListenerInterface {
 
 	private final Canvas canvas;
 	private int x1, y1, x2, y2;
-	private final RightPanel rightPanel;
+	private final ToolPanel rightPanel;
 	private boolean pressed;
 
 	/*
 	 * public void resetPoints() { x1 = y1 = -1; }
 	 */
 
-	public PenDrawListener(Canvas canvas, RightPanel rightPanel) {
+	public PenDrawListener(Canvas canvas, ToolPanel rightPanel) {
 		this.canvas = canvas;
 		this.rightPanel = rightPanel;
 		// x1 = y1 = -1;

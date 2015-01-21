@@ -13,11 +13,11 @@ public class Paint extends JFrame {
 
 	private final Canvas canvas;
 
-	private final LeftPanel leftPanel;
+	private final LayerPanel leftPanel;
 
 	private final TopPanel topPanel;
 
-	private final RightPanel rightPanel;
+	private final ToolPanel rightPanel;
 
 	public Paint() throws UnknownHostException, IOException {
 		this.setSize(WIDTH, HEIGHT);
@@ -26,8 +26,8 @@ public class Paint extends JFrame {
 		this.setLocationRelativeTo(null);
 
 		this.canvas = new Canvas(this);
-		this.rightPanel = new RightPanel(canvas);
-		this.leftPanel = new LeftPanel(canvas);
+		this.rightPanel = new ToolPanel(canvas);
+		this.leftPanel = new LayerPanel(canvas);
 		this.topPanel = new TopPanel(canvas, this);
 
 		this.canvas.setListeners(new PenDrawListener(canvas, rightPanel));
@@ -57,7 +57,7 @@ public class Paint extends JFrame {
 		return canvas;
 	}
 
-	public LeftPanel getLeftPanel() {
+	public LayerPanel getLeftPanel() {
 		return leftPanel;
 	}
 
@@ -65,7 +65,7 @@ public class Paint extends JFrame {
 		return topPanel;
 	}
 
-	public RightPanel getRightPanel() {
+	public ToolPanel getRightPanel() {
 		return rightPanel;
 	}
 

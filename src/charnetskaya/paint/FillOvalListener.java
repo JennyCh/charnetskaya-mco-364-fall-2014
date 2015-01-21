@@ -8,7 +8,7 @@ import charnetskaya.paint.Message.ShapeType;
 
 public class FillOvalListener extends DrawShapes {
 
-	public FillOvalListener(Canvas canvas, RightPanel rightPanel) {
+	public FillOvalListener(Canvas canvas, ToolPanel rightPanel) {
 		super(canvas, rightPanel);
 		// TODO Auto-generated constructor stub
 	}
